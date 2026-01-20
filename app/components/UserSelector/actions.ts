@@ -26,7 +26,7 @@ export async function setUsernameAction(
     const cookieStore = await cookies();
     cookieStore.set(COOKIE_NAME, trimmedUsername, COOKIE_CONFIG);
 
-    revalidatePath("/");
+    revalidatePath("/", "layout");
 
     return null; // Success
   } catch (error) {
