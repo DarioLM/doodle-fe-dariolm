@@ -56,7 +56,7 @@ export function UserSelector({ currentUsername }: UserSelectorProps) {
           {currentUsername && (
             <p className="text-sm text-gray-500">Current: {currentUsername}</p>
           )}
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-col sm:flex-row">
             <input
               type="text"
               id="username"
