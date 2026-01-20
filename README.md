@@ -16,6 +16,16 @@ A real-time chat application built as part of the Doodle Frontend Challenge, dem
 - **Type-safe** end-to-end with TypeScript strict mode
 - **Environment validation** at startup using Zod schemas
 
+## Screenshots
+
+<div>
+<p align="center">
+  <img src="public/chat-capture-desktop.png" alt="Desktop view" width="500"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="public/chat-capture-mobile.png" alt="Mobile view" width="150"/>
+</p>
+</div>
+
 ## Tech Stack
 
 | Technology | Version | Purpose |
@@ -26,6 +36,7 @@ A real-time chat application built as part of the Doodle Frontend Challenge, dem
 | [Tailwind CSS](https://tailwindcss.com) | 4.1.18 | Utility-first styling |
 | [Zod](https://zod.dev) | 4.3.5 | Runtime validation |
 | [Biome](https://biomejs.dev) | 2.3.11 | Linting & formatting |
+| [Vitest](https://vitest.dev) | 4.0.17 | Unit testing |
 
 ## Getting Started
 
@@ -109,6 +120,8 @@ app/
 | `npm run start` | Run production server |
 | `npm run lint` | Run Biome linter |
 | `npm run format` | Format code with Biome |
+| `npm test` | Run tests in watch mode |
+| `npm run test:run` | Run tests once |
 
 ## Key Implementation Details
 
@@ -122,6 +135,22 @@ Messages are refreshed every 5 seconds using client-side polling that triggers s
 ### Cookie-Based Identity
 
 Username is stored in an HTTP-only secure cookie with a 1-year expiration, managed entirely through Server Actions for security.
+
+## Testing
+
+The project uses Vitest for unit testing. Tests are organized in the `tests/` directory:
+
+```
+tests/
+├── server-actions/
+│   ├── send-message.test.ts    # sendMessageAction validation & API tests
+│   └── set-username.test.ts    # setUsernameAction validation tests
+└── lib/
+    ├── env.test.ts             # Environment schema validation tests
+    └── cookies.test.ts         # Cookie utilities tests
+```
+
+Run tests with `npm test` (watch mode) or `npm run test:run` (single run).
 
 ---
 
