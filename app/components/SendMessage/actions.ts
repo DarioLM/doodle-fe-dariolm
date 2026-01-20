@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { env } from "@/app/lib/config/env";
 import { getUsernameFromCookie } from "@/app/lib/cookies/username";
 
@@ -18,9 +18,9 @@ export async function sendMessageAction(
   }
 
   // Get username from cookie
-  const username = await getUsernameFromCookie();
+  const currentUsername = await getUsernameFromCookie();
 
-  if (!username) {
+  if (!currentUsername) {
     return { error: "Please set your username before sending messages" };
   }
 
@@ -33,7 +33,7 @@ export async function sendMessageAction(
       },
       body: JSON.stringify({
         message: message.trim(),
-        author: username,
+        author: currentUsername,
       }),
     });
 
@@ -41,7 +41,7 @@ export async function sendMessageAction(
       throw new Error("Failed to send message");
     }
 
-    revalidatePath("/");
+    revalidateTag("messages", "max");
 
     return null; // Success
   } catch (error) {
