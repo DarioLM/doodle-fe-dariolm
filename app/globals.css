@@ -2,6 +2,12 @@
 
 @theme {
   --background-image-chat: url("/chat-bg.png");
+  --color-primary: #0a5c48;
+  --color-primary-light: #cbeee1;
+  --color-primary-hover: #0e7e62;
+  --color-secondary: #024cbc;
+  --color-chat-bubble-sender: #cbeee1;
+  --color-chat-bubble: #ffffff;
 }
 
 :root {
@@ -12,5 +18,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
 }

@@ -9,26 +9,39 @@ async function getMessages(): Promise<Message[]> {
   return messages;
 }
 
-export default async function ChatFeed() {
+export default async function ChatFeed({
+  actualUsername,
+}: {
+  actualUsername?: string | null;
+}) {
   const messages = await getMessages();
 
   return (
     <section
       role="feed"
       aria-label="Chat messages"
-      className="flex flex-col items-left gap-6 scroll-smooth overflow-y-scroll bg-chat min-h-dvh py-10 px-10"
+      className="flex flex-1 flex-col items-center bg-chat bg-contain scroll-smooth overflow-y-scroll"
     >
-      {(messages || [])?.map(({ message, author, createdAt, _id }: Message) => (
-        <article
-          key={_id}
-          aria-label={`Message from ${author}`}
-          className="flex flex-col items-left gap-0.5 bg-white p-3 border-2 border-gray-200 rounded-lg w-fit"
-        >
-          <small className="text-gray-400">{author}</small>
-          <p className="text-lg leading-8 text-black">{message}</p>
-          <MessageDate createdAt={createdAt} />
-        </article>
-      ))}
+      <div className="flex flex-1 flex-col w-[640px] px-6">
+        {(messages || [])?.map(
+          ({ message, author, createdAt, _id }: Message) => {
+            const messageFromActualUser = author === actualUsername;
+            return (
+              <article
+                key={_id}
+                aria-label={`Message from ${author}`}
+                className={`flex flex-col p-3 my-2 border-2 border-gray-200 rounded-lg w-fit max-w-[420px] ${messageFromActualUser ? "self-end bg-chat-bubble-sender" : "self-left bg-chat-bubble"}`}
+              >
+                {!messageFromActualUser && (
+                  <small className="text-gray-400">{author}</small>
+                )}
+                <p>{message}</p>
+                <MessageDate createdAt={createdAt} />
+              </article>
+            );
+          },
+        )}
+      </div>
     </section>
   );
 }
